@@ -1,5 +1,5 @@
 #include <iostream>
-using namespace std;
+#include <vector>
 
 class Parent {
 protected:
@@ -8,35 +8,37 @@ public:
     void setNum(int n) {
         num = n;
     }
-    virtual void fun() {
-        cout << "Parent fun()" << endl;
-    }
 };
 
 class Child : public Parent {
 public:
-    void fun() override {
-        int digits[4];
-        int temp = num;
-        int sum = 0;
-        for (int i = 0; i < 4; i++) {
-            digits[i] = temp % 10;
-            temp /= 10;
+    void fun() {
+        std::vector<int> digits;
+        while (num > 0) {
+            digits.push_back(num % 10);
+            num /= 10;
         }
-        for (int i = 0; i < 4; i++) {
-            for (int j = i + 1; j < 4; j++) {
+
+        int sum = 0;
+        for (int i = 0; i < digits.size(); i++) {
+            for (int j = i + 1; j < digits.size(); j++) {
                 sum += digits[i] + digits[j];
             }
         }
-        cout << sum << endl;
+
+        std::cout << "The sum is: " << sum << std::endl;
     }
 };
 
 int main() {
-    int n;
-    cin >> n;
     Child c;
+    int n;
+
+    std::cout << "Enter a number: ";
+    std::cin >> n;
+
     c.setNum(n);
     c.fun();
+
     return 0;
 }
